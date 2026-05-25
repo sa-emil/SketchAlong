@@ -1,0 +1,15 @@
+{
+  "name": "sketchguess",
+  "private": true,
+  "scripts": {
+    "dev:server": "cd server && node index.js",
+    "dev:client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm install && npm run build",
+    "start": "cd server && node index.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

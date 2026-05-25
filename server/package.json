@@ -1,0 +1,14 @@
+{
+  "name": "sketchguess-server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "socket.io": "^4.8.0",
+    "socket.io-client": "^4.8.3"
+  }
+}
