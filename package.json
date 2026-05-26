@@ -1,6 +1,7 @@
 {
   "name": "sketchguess",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev:server": "cd server && node index.js",
     "dev:client": "cd client && npm run dev",
