@@ -66,6 +66,7 @@ export default class Game {
     this.guessedPlayers.clear();
     this.drawHistory = [];
     this.currentWord = null;
+    this.broadcast('clearCanvas');
 
     const order = this.getPlayerOrder();
 
