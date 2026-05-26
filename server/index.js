@@ -3,9 +3,11 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { existsSync } from 'fs';
 import Game from './Game.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const distPath = join(__dirname, '../client/dist');
 
 const app = express();
 const server = createServer(app);
@@ -13,10 +15,26 @@ const io = new Server(server, {
   cors: { origin: '*' },
 });
 
+// Debug endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    distPath,
+    distExists: existsSync(distPath),
+    indexExists: existsSync(join(distPath, 'index.html')),
+    cwd: process.cwd(),
+    __dirname,
+  });
+});
+
 // Serve built client in production
-app.use(express.static(join(__dirname, '../client/dist')));
+app.use(express.static(distPath));
 app.get('/{*splat}', (req, res) => {
-  res.sendFile(join(__dirname, '../client/dist/index.html'));
+  const indexPath = join(distPath, 'index.html');
+  if (existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send(`index.html not found at ${indexPath}`);
+  }
 });
 
 const games = new Map(); // roomId -> Game
